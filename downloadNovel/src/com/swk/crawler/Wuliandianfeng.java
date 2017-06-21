@@ -24,9 +24,10 @@ import org.jsoup.select.Elements;
  * @date 2017年6月8日 下午1:24:26
  * 
  * @Description TODO
- *		本文件可下载《九阳帝尊》	http://www.31xs.net/0/349/
+ *		本文件可下载《武炼巅峰》	http://www.xxbiquge.com/0_347/
+ *							http://www.xxbiquge.com/0_347/8862332.html
  */
-public class Novel {
+public class Wuliandianfeng {
 	
 	/**
 	 * 根据章节列表网页的URL，获取所有章节名及对应的链接
@@ -36,7 +37,7 @@ public class Novel {
 		List<HashMap<String, String>> chapterList = new ArrayList<HashMap<String, String>>();
 		
 		//章节列表网页的URL
-		String url = "http://www.31xs.net/0/349/";
+		String url = "http://www.xxbiquge.com/0_347/";
 		
 		try {
 			//根据URL获取HTML文档
@@ -50,10 +51,10 @@ public class Novel {
 				String chapterHref = element.attr("href");//链接
 				
 				//根据网页情况，筛选需要的
-				if(chapterHref.endsWith(".html") && chapterHref.length() < 15){
+				if(chapterHref.endsWith(".html") && chapterHref.startsWith("/0_347")){
 					HashMap<String, String> chapter = new HashMap<String, String>();
 					chapter.put("chapterName", chapterName);
-					chapter.put("chapterHref", url + chapterHref);
+					chapter.put("chapterHref", "http://www.xxbiquge.com" + chapterHref);
 					chapterList.add(chapter);
 				}
 			}
@@ -83,7 +84,11 @@ public class Novel {
 			String[] ss = chapter.split(" ");
 			
 			for (String string : ss) {
-				sb.append(string.substring(3)).append("\r\n");
+				if(string.length() >= 4){
+					sb.append(string.substring(3)).append("\r\n");
+				}else{
+					sb.append(string).append("\r\n");
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -100,37 +105,47 @@ public class Novel {
 		StringBuilder chapterUrl = new StringBuilder();
 		StringBuilder chapterText = new StringBuilder();
 		
-		File file = new File("src/com/swk/novel/jydz.txt");//小说本地目录
+		File file = new File("src/com/swk/novel/wldf.txt");//小说本地目录
+		File errorFile = new File("src/com/swk/novel/error.txt");//错误章节目录
 		Writer w = new FileWriter(file);
+		Writer w2 = new FileWriter(errorFile);
 		
 		//获取章节列表
-		List<HashMap<String, String>> chapterList = Novel.getChapterList();
+		List<HashMap<String, String>> chapterList = Wuliandianfeng.getChapterList();
 		
 		long l1 = System.currentTimeMillis();//计时
 		
 //		for (HashMap<String, String> chapter : chapterList) {
 //			chapterUrl = new StringBuilder(chapter.get("chapterHref"));
-//			chapterText = new StringBuilder(Novel.getChapter(chapterUrl.toString()));
+//			chapterText = new StringBuilder(Wuliandianfeng.getChapter(chapterUrl.toString()));
 //			
-//			w.write(chapter.get("chapterName"));//写入章节名
-//			System.out.println(chapter.get("chapterName"));//输出章节名
-//			w.write(chapterText.toString());//写入文本
+//			if(chapterText == null || chapterText.length() < 20){
+//				w2.write(chapter.get("chapterName"));//写入错误章节名
+//				w.write(chapter.get("chapterName"));//写入章节名
+//			}else{
+//				w.write(chapter.get("chapterName"));//写入章节名
+//				System.out.println(chapter.get("chapterName"));//输出章节名
+//				w.write(chapterText.toString());//写入文本
+//			}
 //		}
 		
 		for(int i = chapterList.size() - 21; i < chapterList.size(); i++){
 			chapterUrl = new StringBuilder(chapterList.get(i).get("chapterHref"));
-			chapterText = new StringBuilder(Novel.getChapter(chapterUrl.toString()));
+			chapterText = new StringBuilder(Wuliandianfeng.getChapter(chapterUrl.toString()));
 			
 			if(chapterText == null || chapterText.length() < 20){
 				i--;
+//				w2.write(chapterList.get(i).get("chapterName"));//写入错误章节名
+//				w.write(chapterList.get(i).get("chapterName"));//写入章节名
 			}else{
 				w.write(chapterList.get(i).get("chapterName"));//写入章节名
 				System.out.println(chapterList.get(i).get("chapterName"));//输出章节名
 				w.write(chapterText.toString());//写入文本
 			}
-			
 		}
 		
+		w2.flush();
+		w2.close();
 		w.flush();
 		w.close();
 		
@@ -141,7 +156,17 @@ public class Novel {
 
 	
 	public static void main(String[] args) throws IOException {
-		Novel.download();
+//		List<HashMap<String, String>> l = Wuliandianfeng.getChapterList();
+//		for (HashMap<String, String> h : l) {
+//			System.out.println(h.get("chapterHref") + "    " + h.get("chapterName"));
+//		}
+//		System.out.println(l.size());
+		
+//		String url = "http://www.xxbiquge.com/0_347/8882644.html";
+//		String s = Wuliandianfeng.getChapter(url);
+//		System.out.println(s);
+		
+		Wuliandianfeng.download();
 	}
 
 }
