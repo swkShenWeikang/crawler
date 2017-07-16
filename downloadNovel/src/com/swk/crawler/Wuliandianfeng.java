@@ -41,7 +41,7 @@ public class Wuliandianfeng {
 		
 		try {
 			//根据URL获取HTML文档
-			Document doc = Jsoup.connect(url).get();
+			Document doc = Jsoup.connect(url).timeout(15000).get();
 			
 			//根据标签获取章节列表
 			Elements list = doc.getElementsByTag("a");
@@ -74,7 +74,7 @@ public class Wuliandianfeng {
 		StringBuilder sb = new StringBuilder("\r\n");
 		try {
 			//根据URL获取单章网页
-			Document doc = Jsoup.connect(url).get();
+			Document doc = Jsoup.connect(url).timeout(5000).get();
 			
 			//获取章节文本
 			Element ele = doc.getElementById("content");
@@ -129,7 +129,7 @@ public class Wuliandianfeng {
 //			}
 //		}
 		
-		for(int i = chapterList.size() - 21; i < chapterList.size(); i++){
+		for(int i = chapterList.size() - 50; i < chapterList.size(); i++){
 			chapterUrl = new StringBuilder(chapterList.get(i).get("chapterHref"));
 			chapterText = new StringBuilder(Wuliandianfeng.getChapter(chapterUrl.toString()));
 			
