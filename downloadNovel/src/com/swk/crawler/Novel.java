@@ -40,7 +40,8 @@ public class Novel {
 		
 		try {
 			//根据URL获取HTML文档
-			Document doc = Jsoup.connect(url).get();
+			Document doc = Jsoup.connect(url).timeout(10000)
+					.userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31").get();
 			
 			//根据标签获取章节列表
 			Elements list = doc.getElementsByTag("a");
@@ -73,7 +74,7 @@ public class Novel {
 		StringBuilder sb = new StringBuilder("\r\n");
 		try {
 			//根据URL获取单章网页
-			Document doc = Jsoup.connect(url).get();
+			Document doc = Jsoup.connect(url).timeout(5000).get();
 			
 			//获取章节文本
 			Element ele = doc.getElementById("content");
@@ -117,7 +118,7 @@ public class Novel {
 //			w.write(chapterText.toString());//写入文本
 //		}
 		
-		for(int i = chapterList.size() - 21; i < chapterList.size(); i++){
+		for(int i = chapterList.size() - 30; i < chapterList.size(); i++){
 			chapterUrl = new StringBuilder(chapterList.get(i).get("chapterHref"));
 			chapterText = new StringBuilder(Novel.getChapter(chapterUrl.toString()));
 			
@@ -141,6 +142,13 @@ public class Novel {
 
 	
 	public static void main(String[] args) throws IOException {
+//		List<HashMap<String, String>> l = Novel.getChapterList();
+//		for (HashMap<String, String> h : l) {
+//			System.out.println(h.get("chapterHref") + "    " + h.get("chapterName"));
+//		}
+//		System.out.println(l.size());
+		
+		
 		Novel.download();
 	}
 
