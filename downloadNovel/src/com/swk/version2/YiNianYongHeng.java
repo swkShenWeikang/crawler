@@ -67,39 +67,13 @@ public class YiNianYongHeng extends BaseNovel {
 	
 	//////////////////////////////////////////////////////////////////////////////////
 	
-	@Override
-	public String getChapter(String url) {
-		//返回结果
-		StringBuilder sb = new StringBuilder("\r\n");
-		
-		//根据URL获取单章网页
-		Document doc = getDoc(url);
-		if(doc == null){
-			System.out.println("获取章节失败！");
-			return null;
-		}
-		
-		//获取章节文本
-		Element ele = doc.getElementById("content");
-		String chapter = ele.text();
-		
-		//处理文本，分段
-		String[] ss = chapter.split(" ");
-		
-		for (String string : ss) {
-			if(string.length() >= 4){
-				sb.append(string.substring(2)).append("\r\n");
-			}else{
-				sb.append(string).append("\r\n");
-			}
-		}
-		
-		return sb.toString();
-	}
 	
 	@Test
 	public void testChapter(){
-		String url = "http://www.biqukan.com/1_1094/14700525.html";
+//		http://www.biqukan.com/1_1094/14640944.html    第831章 强者齐聚！
+//		http://www.biqukan.com/1_1094/15198284.html    第914章 叵测人心
+//		String url = "http://www.biqukan.com/1_1094/14640944.html";
+		String url = "http://www.biqukan.com/1_1094/15198284.html";
 		String s = getChapter(url);
 		System.out.println(s);
 	}
@@ -109,7 +83,7 @@ public class YiNianYongHeng extends BaseNovel {
 	public static void main(String[] args) {
 		YiNianYongHeng ynyh = new YiNianYongHeng();
 		String pathname = "src/com/swk/novel/ynyh.txt";
-		ynyh.download(pathname, 20);
+		ynyh.download(pathname, 3);
 //		ynyh.download(pathname);
 		
 	}

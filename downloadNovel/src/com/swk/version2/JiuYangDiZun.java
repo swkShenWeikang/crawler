@@ -68,35 +68,7 @@ public class JiuYangDiZun extends BaseNovel{
 
 	////////////////////////////////////////////////////////////////////////////////////
 	
-	@Override
-	public String getChapter(String url) {
-		//返回结果
-		StringBuilder sb = new StringBuilder("\r\n");
-		
-		//根据URL获取单章网页
-		Document doc = getDoc(url);
-		if(doc == null){
-			System.out.println("获取章节失败！");
-			return null;
-		}
-		
-		//获取章节文本
-		Element ele = doc.getElementById("content");
-		String chapter = ele.text();
-		
-		//处理文本，分段
-		String[] ss = chapter.split(" ");
-		
-		for (String string : ss) {
-			if(string.length() >= 4){
-				sb.append(string.substring(3)).append("\r\n");
-			}else{
-				sb.append(string).append("\r\n");
-			}
-		}
-		
-		return sb.toString();
-	}
+	
 
 	@Test
 	public void testChapter(){
@@ -111,7 +83,7 @@ public class JiuYangDiZun extends BaseNovel{
 	public static void main(String[] args) {
 		JiuYangDiZun jiu = new JiuYangDiZun();
 		String pathname = "src/com/swk/novel/jydz.txt";
-		jiu.download(pathname, 20);
+		jiu.download(pathname, 25);
 //		jiu.download(pathname);
 	}
 }
