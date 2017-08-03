@@ -83,7 +83,7 @@ public class JiuYangDiZun extends BaseNovel{
 	public static void main(String[] args) {
 		JiuYangDiZun jiu = new JiuYangDiZun();
 		String pathname = "src/com/swk/novel/jydz.txt";
-		jiu.download(pathname, 25);
+		jiu.download(pathname, 10);
 //		jiu.download(pathname);
 	}
 }

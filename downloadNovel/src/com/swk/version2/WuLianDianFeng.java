@@ -83,7 +83,7 @@ public class WuLianDianFeng extends BaseNovel {
 	public static void main(String[] args) {
 		WuLianDianFeng wldf = new WuLianDianFeng();
 		String pathname = "src/com/swk/novel/wldf.txt";
-		wldf.download(pathname, 20);
+		wldf.download(pathname, 10);
 //		wldf.download(pathname);
 		
 	}

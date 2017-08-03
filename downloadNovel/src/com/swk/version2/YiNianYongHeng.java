@@ -83,7 +83,7 @@ public class YiNianYongHeng extends BaseNovel {
 	public static void main(String[] args) {
 		YiNianYongHeng ynyh = new YiNianYongHeng();
 		String pathname = "src/com/swk/novel/ynyh.txt";
-		ynyh.download(pathname, 3);
+		ynyh.download(pathname, 20);
 //		ynyh.download(pathname);
 		
 	}
