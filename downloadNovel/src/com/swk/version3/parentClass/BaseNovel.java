@@ -4,11 +4,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.HashMap;
 import java.util.List;
 
 import org.jsoup.nodes.Document;
 
+import com.swk.version3.bean.Chapter;
 import com.swk.version3.behaviorInterface.ConnectWebPageBehavior;
 import com.swk.version3.behaviorInterface.HandleChapterContentBehavior;
 import com.swk.version3.behaviorInterface.HandleChapterListBehavior;
@@ -65,7 +65,7 @@ public abstract class BaseNovel {
 	 * 获取小说章节列表
 	 * @return
 	 */
-	public List<HashMap<String, String>> getChapterList(String url){
+	public List<Chapter> getChapterList(String url){
 		
 		//根据URL获取HTML文档
 		Document doc = connectWebPageBehavior.getDoc(url);
@@ -111,7 +111,7 @@ public abstract class BaseNovel {
 		StringBuilder chapterText = new StringBuilder();
 		
 		//获取章节列表
-		List<HashMap<String, String>> chapterList = this.getChapterList(url);
+		List<Chapter> chapterList = this.getChapterList(url);
 		
 		//计时
 		long l1 = System.currentTimeMillis();
@@ -122,17 +122,17 @@ public abstract class BaseNovel {
 			//下载最新的指定数量的章节
 			for(int i = chapterList.size() - num; i < chapterList.size(); i++){
 				//先获取单章网页URL，然后获取单章文本
-				chapterUrl = new StringBuilder(chapterList.get(i).get("chapterHref"));
+				chapterUrl = new StringBuilder(chapterList.get(i).getChapterHref());
 				chapterText = new StringBuilder(this.getChapter(chapterUrl.toString()));
 				
 				if(chapterText == null || chapterText.length() < 20){
-					System.out.println("获取失败，重新获取..." + chapterList.get(i).get("chapterName"));
+					System.out.println("获取失败，重新获取..." + chapterList.get(i).getChapterName());
 					i--;//章节内容获取出错，返回，重新获取该章节，直到获取成功
 				}else{
 					//写入章节名及文本
-					writer.write("\r\n\r\n" + chapterList.get(i).get("chapterName") + "\r\n");
+					writer.write("\r\n\r\n" + chapterList.get(i).getChapterName() + "\r\n");
 					writer.write(chapterText.toString());
-					System.out.println(chapterList.get(i).get("chapterName"));//输出章节名
+					System.out.println(chapterList.get(i).getChapterName());//输出章节名
 				}
 			}
 		} catch (IOException e) {
@@ -159,7 +159,7 @@ public abstract class BaseNovel {
 	 */
 	public void download(String url, String pathname){
 		//获取章节列表长度
-		List<HashMap<String, String>> chapterList = this.getChapterList(url);
+		List<Chapter> chapterList = this.getChapterList(url);
 		this.download(url, pathname, chapterList.size());
 	}
 	
