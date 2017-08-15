@@ -1,10 +1,8 @@
 package com.swk.version3.childClass;
 
-import java.util.HashMap;
 import java.util.List;
-
 import org.junit.Test;
-
+import com.swk.version3.bean.Chapter;
 import com.swk.version3.behaviorImplements.ConnectWithoutLogin;
 import com.swk.version3.behaviorImplements.HandleContentById;
 import com.swk.version3.behaviorImplements.HandleListForYnyh;
@@ -41,9 +39,9 @@ public class YiNianYongHeng extends BaseNovel {
 	@Test
 	public void testList(){//测试获取章节列表方法
 		String url = "http://www.biqukan.com/1_1094/";
-		List<HashMap<String, String>> list = getChapterList(url);
-		for (HashMap<String, String> h : list) {
-			System.out.println(h.get("chapterHref") + "--->" + h.get("chapterName"));
+		List<Chapter> list = getChapterList(url);
+		for (Chapter chapter : list) {
+			System.out.println(chapter.getChapterHref() + "-->" + chapter.getChapterName());
 		}
 		System.out.println(list.size());
 	}
@@ -63,7 +61,7 @@ public class YiNianYongHeng extends BaseNovel {
 		String pathname = "src/com/swk/novel/ynyh.txt";
 		
 		YiNianYongHeng ynyh = new YiNianYongHeng();
-		ynyh.download(url, pathname, 40);
+		ynyh.download(url, pathname, 30);
 //		ynyh.download(url, pathname);
 		
 	}//main
