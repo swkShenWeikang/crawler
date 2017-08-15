@@ -1,13 +1,11 @@
 package com.swk.version3.behaviorImplements;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
+import com.swk.version3.bean.Chapter;
 import com.swk.version3.behaviorInterface.HandleChapterListBehavior;
 
 /**
@@ -28,9 +26,9 @@ import com.swk.version3.behaviorInterface.HandleChapterListBehavior;
 public class HandleListForYnyh implements HandleChapterListBehavior {
 
 	@Override
-	public List<HashMap<String, String>> handleChapterList(Document doc) {
+	public List<Chapter> handleChapterList(Document doc) {
 		//返回结果
-		List<HashMap<String, String>> chapterList = new ArrayList<HashMap<String, String>>();
+		List<Chapter> chapterList = new ArrayList<Chapter>();
 		
 		//根据标签获取章节列表
 		Elements list = doc.getElementsByTag("a");
@@ -40,9 +38,9 @@ public class HandleListForYnyh implements HandleChapterListBehavior {
 			
 			//根据网页情况，筛选需要的
 			if(chapterHref.endsWith(".html") && chapterHref.startsWith("/1_1094")){
-				HashMap<String, String> chapter = new HashMap<String, String>();
-				chapter.put("chapterName", chapterName);
-				chapter.put("chapterHref", "http://www.biqukan.com" + chapterHref);
+				Chapter chapter = new Chapter();
+				chapter.setChapterName(chapterName);
+				chapter.setChapterHref("http://www.biqukan.com" + chapterHref);
 				chapterList.add(chapter);
 			}
 		}
