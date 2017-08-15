@@ -1,8 +1,8 @@
 package com.swk.version3.behaviorInterface;
 
-import java.util.HashMap;
 import java.util.List;
 import org.jsoup.nodes.Document;
+import com.swk.version3.bean.Chapter;
 
 /**
  * 
@@ -28,6 +28,7 @@ public interface HandleChapterListBehavior {
 	 *         chapterName    单章名称
 	 *         chapterHref    单章URL
 	 */
-	public List<HashMap<String, String>> handleChapterList(Document doc);
+	public List<Chapter> handleChapterList(Document doc);
+//	public List<HashMap<String, String>> handleChapterList(Document doc);
 	
 }
