@@ -108,7 +108,7 @@ public abstract class BaseNovel {
 		
 		//临时URL和文本
 		StringBuilder chapterUrl = new StringBuilder();
-		StringBuilder chapterText = new StringBuilder();
+		String chapterText = "";
 		
 		//获取章节列表
 		List<Chapter> chapterList = this.getChapterList(url);
@@ -123,7 +123,7 @@ public abstract class BaseNovel {
 			for(int i = chapterList.size() - num; i < chapterList.size(); i++){
 				//先获取单章网页URL，然后获取单章文本
 				chapterUrl = new StringBuilder(chapterList.get(i).getChapterHref());
-				chapterText = new StringBuilder(this.getChapter(chapterUrl.toString()));
+				chapterText = this.getChapter(chapterUrl.toString());
 				
 				if(chapterText == null || chapterText.length() < 20){
 					System.out.println("获取失败，重新获取..." + chapterList.get(i).getChapterName());
